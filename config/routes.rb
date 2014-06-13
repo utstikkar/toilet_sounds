@@ -2,19 +2,14 @@ Rails.application.routes.draw do
   
   namespace :api, defaults: {format: 'json'} do
     namespace :v1 do
-      resources :users, :only => [] do
-        member do
-          get :login
-        end
-      end
-    
-      resources :sounds, :only => [] do
-        member do
-          get :show_party
-          post :contribute
-          post :pick
-        end
-      end
+      
+      get '/users/login'                                => 'users#login',       :as => :users_login
+      
+      get '/sounds/show_party/:party_id'                => 'sounds#show_party', :as => :sounds_showparty
+      post 'sounds/:id/contribute/:party_id/:user_id'   => 'sounds#contribute', :as => :sounds_contribute
+      post 'sounds/:id/pick/:party_id/:user_id'         => 'sounds#pick',       :as => :sounds_pick
+      
+    end
   end
   
   # The priority is based upon order of creation: first created -> highest priority.
